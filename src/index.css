@@ -1,0 +1,353 @@
+/* ============ CTR media — Warm SaaS Design System ============ */
+:root {
+  --bg: #fffcf5;
+  --cream: #fff6e6;
+  --peach: #ffedd2;
+  --surface: #ffffff;
+  --border: #f0e6d2;
+  --border-strong: #e4d5b8;
+  --ink: #161310;
+  --ink-soft: #4a443b;
+  --muted: #8a8271;
+  --yellow: #ffc913;
+  --yellow-deep: #f5a700;
+  --amber: #ffb020;
+  --yellow-bg: #fff3d6;
+  --coral: #ff6b4a;
+  --green: #0e9f6e;
+  --green-bg: #e5f6ef;
+  --blue: #1a73e8;
+  --blue-bg: #e8f0fe;
+  --violet: #7c5cff;
+  --violet-bg: #f0ecff;
+  --whatsapp: #25d366;
+  --radius: 24px;
+  --radius-sm: 16px;
+  --shadow-sm: 0 1px 2px rgba(90, 70, 20, 0.05), 0 4px 14px -4px rgba(90, 70, 20, 0.08);
+  --shadow-md: 0 2px 6px rgba(90, 70, 20, 0.06), 0 18px 44px -14px rgba(90, 70, 20, 0.16);
+  --shadow-lg: 0 4px 10px rgba(90, 70, 20, 0.06), 0 36px 80px -22px rgba(90, 70, 20, 0.26);
+  --shadow-pop: 0 2px 0 var(--ink), 0 14px 34px -12px rgba(90, 70, 20, 0.28);
+  --container: 1200px;
+  --nav-h: 78px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-h) + 16px);
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
+}
+
+body {
+  font-family: "Heebo", -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.65;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+::selection {
+  background: var(--yellow);
+  color: var(--ink);
+}
+
+/* ---------- layout ---------- */
+.container {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+.section {
+  padding-block: 110px;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding-block: 76px;
+  }
+}
+
+/* ---------- typography ---------- */
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  color: var(--ink);
+  background: #fff;
+  border: 1.5px solid var(--ink);
+  box-shadow: 2px 2px 0 var(--ink);
+  padding: 6px 16px;
+  border-radius: 100px;
+  margin-bottom: 22px;
+  transform: rotate(-1deg);
+}
+
+.section-title {
+  font-size: clamp(2rem, 4.6vw, 3.3rem);
+  font-weight: 900;
+  line-height: 1.16;
+  letter-spacing: -0.015em;
+  margin-bottom: 18px;
+}
+
+.section-sub {
+  font-size: clamp(1.02rem, 1.6vw, 1.2rem);
+  color: var(--muted);
+  max-width: 640px;
+  font-weight: 400;
+}
+
+.center {
+  text-align: center;
+}
+
+.center .section-sub {
+  margin-inline: auto;
+}
+
+/* מרקר צהוב נטוי — חתימת המותג */
+.grad-text {
+  position: relative;
+  white-space: nowrap;
+}
+
+.grad-text::before {
+  content: "";
+  position: absolute;
+  inset: 55% -6px 2% -6px;
+  background: var(--yellow);
+  z-index: -1;
+  transform: rotate(-1.2deg);
+  border-radius: 4px;
+}
+
+.green-text {
+  color: var(--green);
+}
+
+/* ---------- buttons ---------- */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 1.05rem;
+  font-weight: 800;
+  padding: 16px 32px;
+  border-radius: 100px;
+  overflow: hidden;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, background 0.25s ease;
+  will-change: transform;
+  white-space: nowrap;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-lg {
+  font-size: 1.12rem;
+  padding: 18px 38px;
+}
+
+.btn-primary {
+  background: var(--yellow);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.btn-primary:hover {
+  transform: translate(-2px, -3px);
+  box-shadow: 6px 7px 0 var(--ink);
+  background: #ffd23d;
+}
+
+/* ברק חולף על הכפתור הראשי — transform בלבד, ידידותי לביצועים */
+.btn-primary::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 40%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.65), transparent);
+  transform: translateX(-180%) skewX(-20deg);
+  animation: shine 3.6s ease-in-out infinite;
+}
+
+@keyframes shine {
+  0%, 60% {
+    transform: translateX(-180%) skewX(-20deg);
+  }
+  100% {
+    transform: translateX(420%) skewX(-20deg);
+  }
+}
+
+.btn-dark {
+  background: var(--ink);
+  color: #fff;
+  box-shadow: 0 10px 26px -10px rgba(22, 19, 16, 0.5);
+}
+
+.btn-dark:hover {
+  transform: translateY(-3px);
+  background: #2a251f;
+}
+
+.btn-whatsapp {
+  background: #fff;
+  border: 2px solid var(--ink);
+  color: var(--ink);
+  box-shadow: 3px 3px 0 rgba(22, 19, 16, 0.15);
+}
+
+.btn-whatsapp svg {
+  color: #16a34a;
+}
+
+.btn-whatsapp:hover {
+  transform: translate(-2px, -3px);
+  box-shadow: 5px 6px 0 rgba(22, 19, 16, 0.18);
+  background: #f4fef7;
+}
+
+/* ---------- cards ---------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.card:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-md);
+}
+
+/* כרטיס "פופ" — מסגרת דיו וצל קשיח, סגנון SaaS שובב */
+.card-pop {
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-pop);
+}
+
+/* ---------- decor ---------- */
+.sparkle {
+  position: absolute;
+  pointer-events: none;
+}
+
+.coin {
+  position: absolute;
+  pointer-events: none;
+  filter: drop-shadow(0 6px 10px rgba(90, 70, 20, 0.25));
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.squiggle {
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: -0.18em;
+  width: 100%;
+  height: 0.32em;
+}
+
+.rot-badge {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 116px;
+  height: 116px;
+  transition: transform 0.3s ease;
+}
+
+.rot-badge:hover {
+  transform: scale(1.07);
+}
+
+.rot-badge svg {
+  width: 100%;
+  height: 100%;
+}
+
+.rot-badge__center {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--yellow);
+  border: 2px solid #161310;
+}
+
+/* accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
