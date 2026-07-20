@@ -220,6 +220,13 @@ export const dict = {
         website: "כתובת האתר",
         budget: "תקציב חודשי",
         none: "לא צוין",
+        attr: {
+          channel: "מקור",
+          campaign: "קמפיין",
+          adgroup: "קבוצת מודעות",
+          ad: "מודעה",
+          keyword: "מילת מפתח",
+        },
       },
     },
     footer: {
@@ -448,6 +455,13 @@ export const dict = {
         website: "Website",
         budget: "Monthly budget",
         none: "Not specified",
+        attr: {
+          channel: "Source",
+          campaign: "Campaign",
+          adgroup: "Ad group",
+          ad: "Ad",
+          keyword: "Keyword",
+        },
       },
     },
     footer: {

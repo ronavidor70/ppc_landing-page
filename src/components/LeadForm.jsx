@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Send, ShieldCheck, Clock, MessageCircle, CheckCircle2 } from "lucide-react";
-import { waLink } from "../config.js";
+import { waLink, CRM_WEBHOOK_URL } from "../config.js";
 import { useLang } from "../i18n.jsx";
+import { attributionLines, sendLeadToCrm } from "../attribution.js";
+import { insertLeadToSupabase } from "../supabase.js";
 import { FunnelIllustration } from "./Decor.jsx";
 
 const ease = [0.22, 1, 0.36, 1];
 const pointIcons = [Clock, ShieldCheck, CheckCircle2];
 
 export default function LeadForm({ onOpenPrivacy }) {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const L = t.lead;
   const [form, setForm] = useState({ name: "", phone: "", business: "", website: "", budget: "" });
   const [sent, setSent] = useState(false);
@@ -25,6 +27,7 @@ export default function LeadForm({ onOpenPrivacy }) {
     }
     setError("");
     const m = L.waMsg;
+    // שורות הליד + שורות הייחוס (מקור הקמפיין) — מסומן PPC אוטומטית
     const msg = [
       m.intro,
       `${m.name}: ${form.name}`,
@@ -32,7 +35,29 @@ export default function LeadForm({ onOpenPrivacy }) {
       `${m.biz}: ${form.business || m.none}`,
       `${m.website}: ${form.website || m.none}`,
       `${m.budget}: ${form.budget || m.none}`,
+      "———",
+      ...attributionLines(m.attr),
     ].join("\n");
+
+    // הכנסה ישירה ל-CRM (Supabase) — כולל כל נתוני הייחוס
+    insertLeadToSupabase({
+      name: form.name,
+      phone: form.phone,
+      business: form.business,
+      website: form.website,
+      budget: form.budget,
+      lang,
+    });
+
+    // שליחה ל-webhook נוסף אם הוגדר (אופציונלי)
+    sendLeadToCrm(CRM_WEBHOOK_URL, {
+      name: form.name,
+      phone: form.phone,
+      business: form.business,
+      website: form.website,
+      budget: form.budget,
+    });
+
     window.open(waLink(msg), "_blank");
     setSent(true);
   };

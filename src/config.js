@@ -1,6 +1,15 @@
 // ==== פרטי יצירת קשר — עדכן כאן פעם אחת והכל מתעדכן בכל הדף ====
 export const PHONE_DISPLAY = "053-488-1767";
 export const WHATSAPP_NUMBER = "972534881767"; // פורמט בינלאומי בלי +
+
+// ==== שילוח לידים ל-CRM ====
+// הערכים נקראים מקובץ .env (VITE_...). ריק = הליד ממשיך רק לוואטסאפ.
+export const CRM_WEBHOOK_URL = import.meta.env.VITE_CRM_WEBHOOK_URL || "";
+
+// ==== Supabase (ה-CRM) — הכנסת לידים ישירה לטבלה ====
+export const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || "";
+export const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || "";
+export const SUPABASE_LEADS_TABLE = import.meta.env.VITE_SUPABASE_LEADS_TABLE || "leads";
 export const WHATSAPP_MESSAGE =
   "היי, הגעתי מדף הנחיתה של CTR ואשמח לבדיקת התאמה חינם לקמפיינים שלי";
 
