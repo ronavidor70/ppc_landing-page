@@ -15,15 +15,21 @@ import Footer from "./components/Footer.jsx";
 import FloatingCta from "./components/FloatingCta.jsx";
 import PrivacyPolicyModal from "./components/PrivacyPolicyModal.jsx";
 import CookieConsent from "./components/CookieConsent.jsx";
+import Accessibility from "./components/Accessibility.jsx";
+import { useLang } from "./i18n.jsx";
 
 export default function App() {
+  const { t } = useLang();
   const [privacyOpen, setPrivacyOpen] = useState(false);
   const [cookiesOpen, setCookiesOpen] = useState(false);
 
   return (
     <div>
+      <a href="#main-content" className="skip-link">
+        {t.a11y.skip}
+      </a>
       <Nav />
-      <main>
+      <main id="main-content">
         <Hero />
         <TrustBar />
         <Results />
@@ -37,6 +43,7 @@ export default function App() {
       </main>
       <Footer onOpenPrivacy={() => setPrivacyOpen(true)} onOpenCookies={() => setCookiesOpen(true)} />
       <FloatingCta />
+      <Accessibility />
       <PrivacyPolicyModal open={privacyOpen} onClose={() => setPrivacyOpen(false)} />
       <CookieConsent
         settingsOpen={cookiesOpen}

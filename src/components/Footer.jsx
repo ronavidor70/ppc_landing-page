@@ -32,6 +32,13 @@ export default function Footer({ onOpenPrivacy, onOpenCookies }) {
         <button type="button" className="privacy-link footer__privacy" onClick={onOpenCookies}>
           {t.footer.cookies}
         </button>
+        <button
+          type="button"
+          className="privacy-link footer__privacy"
+          onClick={() => window.dispatchEvent(new CustomEvent("open-a11y-statement"))}
+        >
+          {t.a11y.statement}
+        </button>
       </div>
     </footer>
   );

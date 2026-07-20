@@ -1,0 +1,406 @@
+/* ============================================================
+   נגישות — ת"י 5568 / WCAG 2.0 AA
+   ============================================================ */
+
+/* ---- הגדלת טקסט (font scale) ---- */
+:root {
+  font-size: calc(100% * var(--a11y-font-scale, 1));
+}
+
+/* ---- דילוג לתוכן (skip link) ---- */
+.skip-link {
+  position: fixed;
+  top: -100px;
+  inset-inline-start: 16px;
+  z-index: 300;
+  padding: 12px 22px;
+  background: var(--ink, #161310);
+  color: #fff;
+  font-weight: 800;
+  border-radius: 0 0 12px 12px;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: 3px solid var(--yellow, #ffc913);
+}
+
+/* ---- טבעת מיקוד ברורה למקלדת (focus visible) ---- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid #1a73e8;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ============ כפתור פתיחת התפריט (FAB) ============ */
+.a11y-fab {
+  position: fixed;
+  bottom: 26px;
+  inset-inline-end: 26px;
+  z-index: 160;
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  color: #fff;
+  background: #1a56db;
+  border: 2.5px solid #fff;
+  box-shadow: 0 6px 20px -4px rgba(26, 86, 219, 0.6), 0 0 0 2px rgba(26, 86, 219, 0.25);
+  transition: transform 0.25s ease;
+}
+
+.a11y-fab:hover {
+  transform: scale(1.07);
+}
+
+@media (max-width: 760px) {
+  .a11y-fab {
+    bottom: 92px;
+    width: 52px;
+    height: 52px;
+  }
+}
+
+/* ============ פאנל התפריט ============ */
+.a11y-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 165;
+  background: rgba(22, 19, 16, 0.35);
+}
+
+.a11y-panel {
+  position: fixed;
+  bottom: 26px;
+  inset-inline-end: 26px;
+  z-index: 170;
+  width: 340px;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100dvh - 60px);
+  overflow-y: auto;
+  background: #fff;
+  border: 2px solid #161310;
+  border-radius: 20px;
+  box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.4);
+  padding: 18px;
+}
+
+@media (max-width: 760px) {
+  .a11y-panel {
+    bottom: 92px;
+  }
+}
+
+.a11y-panel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.a11y-panel__head > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #161310;
+}
+
+.a11y-panel__head button {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  color: #161310;
+  background: #f2efe8;
+}
+
+.a11y-panel__head button:hover {
+  background: #e6e2d8;
+}
+
+/* גודל טקסט */
+.a11y-font {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  background: #f7f5ef;
+  border: 1.5px solid #e4dcc9;
+  border-radius: 12px;
+  margin-bottom: 14px;
+  font-weight: 700;
+  color: #161310;
+}
+
+.a11y-font__btns {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.a11y-font__btns button {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  color: #161310;
+  background: #fff;
+  border: 1.5px solid #161310;
+}
+
+.a11y-font__btns button:hover {
+  background: #ffe566;
+}
+
+.a11y-font__val {
+  min-width: 48px;
+  text-align: center;
+  font-weight: 800;
+}
+
+/* רשת כפתורי מצב */
+.a11y-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.a11y-toggle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 8px;
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-align: center;
+  color: #2a2620;
+  background: #f7f5ef;
+  border: 1.5px solid #e4dcc9;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.a11y-toggle:hover {
+  border-color: #161310;
+}
+
+.a11y-toggle.is-on {
+  color: #fff;
+  background: #1a56db;
+  border-color: #1a56db;
+}
+
+/* תחתית הפאנל */
+.a11y-panel__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1.5px dashed #e4dcc9;
+}
+
+.a11y-reset {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #161310;
+}
+
+.a11y-reset:hover {
+  text-decoration: underline;
+}
+
+.a11y-statement-link {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1a56db;
+  text-decoration: underline;
+}
+
+/* ============ מודל הצהרת נגישות ============ */
+.a11y-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 210;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(22, 19, 16, 0.6);
+}
+
+.a11y-modal {
+  position: relative;
+  max-width: 640px;
+  width: 100%;
+  max-height: 88vh;
+  overflow-y: auto;
+  background: #fff;
+  border-radius: 22px;
+  padding: 38px 34px;
+}
+
+.a11y-modal__close {
+  position: absolute;
+  top: 16px;
+  inset-inline-start: 16px;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  color: #161310;
+  background: #f2efe8;
+}
+
+.a11y-modal__close:hover {
+  background: #e6e2d8;
+}
+
+.a11y-modal h2 {
+  font-size: 1.7rem;
+  font-weight: 900;
+  margin-bottom: 4px;
+  color: #161310;
+}
+
+.a11y-modal__updated {
+  font-size: 0.85rem;
+  color: #8a8271;
+  margin-bottom: 18px;
+}
+
+.a11y-modal p {
+  color: #3d4148;
+  margin-bottom: 12px;
+  line-height: 1.7;
+}
+
+.a11y-modal__contact {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 8px 0 16px;
+  padding: 18px;
+  background: #fff7d6;
+  border: 1.5px solid #f4e3a0;
+  border-radius: 14px;
+  color: #161310;
+}
+
+.a11y-modal__contact strong {
+  font-size: 1.05rem;
+  margin-bottom: 4px;
+}
+
+.a11y-modal__contact a {
+  color: #1a56db;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.a11y-modal__note {
+  font-size: 0.8rem;
+  color: #8a8271;
+}
+
+/* ============================================================
+   מצבי נגישות המופעלים על <html>
+   ============================================================ */
+
+/* ניגודיות גבוהה */
+html.a11y-contrast {
+  --muted: #2a2620;
+  --text-soft: #161310;
+}
+
+html.a11y-contrast body {
+  color: #000;
+}
+
+html.a11y-contrast .section-sub,
+html.a11y-contrast .m-label,
+html.a11y-contrast p {
+  color: #1a1712 !important;
+}
+
+html.a11y-contrast a,
+html.a11y-contrast .nav__link {
+  text-decoration: underline;
+}
+
+/* ניגודיות הפוכה (negative) — הופך את כל הדף, ומחזיר תמונות למצב תקין */
+html.a11y-invert {
+  filter: invert(1) hue-rotate(180deg);
+  background: #fff;
+}
+
+html.a11y-invert img,
+html.a11y-invert video,
+html.a11y-invert .a11y-fab,
+html.a11y-invert svg image {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/* גווני אפור */
+html.a11y-grayscale {
+  filter: grayscale(1);
+}
+
+html.a11y-invert.a11y-grayscale {
+  filter: invert(1) hue-rotate(180deg) grayscale(1);
+}
+
+/* הדגשת קישורים */
+html.a11y-links a {
+  text-decoration: underline !important;
+  text-underline-offset: 3px;
+  outline: 2px solid rgba(26, 86, 219, 0.5);
+  outline-offset: 2px;
+  background: rgba(255, 229, 102, 0.35);
+}
+
+/* פונט קריא */
+html.a11y-readable,
+html.a11y-readable body,
+html.a11y-readable button,
+html.a11y-readable input,
+html.a11y-readable select,
+html.a11y-readable textarea {
+  font-family: Arial, "Segoe UI", Tahoma, sans-serif !important;
+  letter-spacing: 0.01em;
+}
+
+html.a11y-readable * {
+  font-family: Arial, "Segoe UI", Tahoma, sans-serif !important;
+}
+
+/* סמן גדול */
+html.a11y-bigcursor,
+html.a11y-bigcursor * {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24' fill='%23fff' stroke='%23000' stroke-width='1.5'%3E%3Cpath d='M4 2l6 16 2.5-6.5L19 9z'/%3E%3C/svg%3E") 4 2, auto !important;
+}
+
+/* עצירת אנימציות */
+html.a11y-stop-motion *,
+html.a11y-stop-motion *::before,
+html.a11y-stop-motion *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}

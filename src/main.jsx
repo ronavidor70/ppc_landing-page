@@ -1,6 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
+import "./a11y.css";
 import App from "./App.jsx";
 import { LanguageProvider } from "./i18n.jsx";
 import { captureAttribution } from "./attribution.js";
