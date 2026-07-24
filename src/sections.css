@@ -2435,6 +2435,40 @@
   max-width: 320px;
 }
 
+.lead__qr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+  padding: 16px;
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 16px;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.lead__qr svg {
+  display: block;
+  width: 150px;
+  height: auto;
+}
+
+.lead__qr-hint {
+  font-size: 0.85rem;
+  color: var(--muted);
+  max-width: 190px;
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* בנייד המשתמש כבר בטלפון — אין צורך ב-QR, משאירים רק את הכפתור */
+@media (max-width: 640px) {
+  .lead__qr {
+    display: none;
+  }
+}
+
 @media (max-width: 900px) {
   .lead__box {
     grid-template-columns: 1fr;

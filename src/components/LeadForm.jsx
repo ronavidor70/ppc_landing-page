@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import QRCode from "react-qr-code";
 import { Send, ShieldCheck, Clock, MessageCircle, CheckCircle2 } from "lucide-react";
 import { waLink, CRM_WEBHOOK_URL } from "../config.js";
 import { useLang } from "../i18n.jsx";
@@ -16,6 +17,7 @@ export default function LeadForm({ onOpenPrivacy }) {
   const [form, setForm] = useState({ name: "", phone: "", email: "", business: "", website: "", budget: "" });
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
+  const [waUrl, setWaUrl] = useState("");
 
   const update = (k) => (e) => setForm({ ...form, [k]: e.target.value });
 
@@ -69,7 +71,8 @@ export default function LeadForm({ onOpenPrivacy }) {
       budget: form.budget,
     });
 
-    window.open(waLink(msg), "_blank");
+    // במקום לפתוח וואטסאפ אוטומטית — שומרים את הקישור ומציגים QR + כפתור במסך התודה
+    setWaUrl(waLink(msg));
     setSent(true);
   };
 
@@ -116,7 +119,13 @@ export default function LeadForm({ onOpenPrivacy }) {
               </div>
               <h3>{L.thanksTitle}</h3>
               <p>{L.thanksDesc}</p>
-              <a href={waLink()} target="_blank" rel="noreferrer" className="btn btn-whatsapp">
+              {waUrl && (
+                <div className="lead__qr">
+                  <QRCode value={waUrl} size={150} fgColor="#111111" bgColor="#ffffff" />
+                  <span className="lead__qr-hint">{L.qrHint}</span>
+                </div>
+              )}
+              <a href={waUrl || waLink()} target="_blank" rel="noreferrer" className="btn btn-whatsapp">
                 <MessageCircle size={19} />
                 {L.thanksWa}
               </a>

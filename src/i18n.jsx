@@ -230,8 +230,9 @@ export const dict = {
       privacy: "הפרטים ישמשו לטיפול בפנייה בהתאם",
       privacyLink: "למדיניות הפרטיות",
       thanksTitle: "הפרטים אצלנו!",
-      thanksDesc: "נחזור אליך ממש בקרוב. רוצה לזרז? שלח לנו הודעה ישירה:",
-      thanksWa: "פתח וואטסאפ",
+      thanksDesc: "נחזור אליך ממש בקרוב. רוצה לזרז? דברו איתנו עכשיו בוואטסאפ:",
+      thanksWa: "לחץ עכשיו לשיחה עם נציג",
+      qrHint: "במחשב? סרקו את הקוד לפתיחת השיחה בנייד",
       waMsg: {
         intro: "ליד חדש מדף הנחיתה של CTR:",
         name: "שם",
@@ -486,8 +487,9 @@ export const dict = {
       privacy: "Your details will be used to handle your inquiry under our",
       privacyLink: "privacy policy",
       thanksTitle: "We've got your details!",
-      thanksDesc: "We'll get back to you very soon. Want to speed it up? Message us directly:",
-      thanksWa: "Open WhatsApp",
+      thanksDesc: "We'll get back to you very soon. Want to speed it up? Chat with us now on WhatsApp:",
+      thanksWa: "Click now to chat with a rep",
+      qrHint: "On desktop? Scan the code to open the chat on your phone",
       waMsg: {
         intro: "New lead from the CTR landing page:",
         name: "Name",
