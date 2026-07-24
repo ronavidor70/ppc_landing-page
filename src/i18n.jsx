@@ -216,6 +216,8 @@ export const dict = {
       namePh: "איך קוראים לך?",
       phoneLabel: "טלפון *",
       phonePh: "050-0000000",
+      emailLabel: "אימייל",
+      emailPh: "name@example.com (לא חובה, לשיוך מדויק)",
       bizLabel: "תחום העסק",
       bizPh: "למשל: חנות אונליין, קליניקה, B2B...",
       websiteLabel: "כתובת האתר",
@@ -234,6 +236,7 @@ export const dict = {
         intro: "ליד חדש מדף הנחיתה של CTR:",
         name: "שם",
         phone: "טלפון",
+        email: "אימייל",
         biz: "תחום העסק",
         website: "כתובת האתר",
         budget: "תקציב חודשי",
@@ -469,6 +472,8 @@ export const dict = {
       namePh: "What's your name?",
       phoneLabel: "Phone *",
       phonePh: "050-0000000",
+      emailLabel: "Email",
+      emailPh: "name@example.com (optional, for accurate matching)",
       bizLabel: "Business field",
       bizPh: "e.g. online store, clinic, B2B...",
       websiteLabel: "Website address",
@@ -487,6 +492,7 @@ export const dict = {
         intro: "New lead from the CTR landing page:",
         name: "Name",
         phone: "Phone",
+        email: "Email",
         biz: "Business field",
         website: "Website",
         budget: "Monthly budget",
@@ -513,19 +519,35 @@ export const dict = {
 };
 
 const LangContext = createContext(null);
+const DEFAULT_LANG = "he";
+
+function readStoredLanguage() {
+  try {
+    const stored = localStorage.getItem("ctr-lang");
+    return Object.hasOwn(dict, stored) ? stored : DEFAULT_LANG;
+  } catch {
+    return DEFAULT_LANG;
+  }
+}
 
 export function LanguageProvider({ children }) {
-  const [lang, setLang] = useState(() => localStorage.getItem("ctr-lang") || "he");
+  const [lang, setLang] = useState(readStoredLanguage);
 
   useEffect(() => {
-    const d = dict[lang];
-    document.documentElement.lang = lang;
+    const safeLang = Object.hasOwn(dict, lang) ? lang : DEFAULT_LANG;
+    const d = dict[safeLang];
+    document.documentElement.lang = safeLang;
     document.documentElement.dir = d.dir;
     document.title =
-      lang === "he"
+      safeLang === "he"
         ? "CTR media | ניהול קמפיינים ממומנים שמייצרים תוצאות"
         : "CTR media | Paid campaigns that drive real results";
-    localStorage.setItem("ctr-lang", lang);
+    try {
+      localStorage.setItem("ctr-lang", safeLang);
+    } catch {
+      /* Storage can be unavailable in private or embedded browsers. */
+    }
+    if (safeLang !== lang) setLang(safeLang);
   }, [lang]);
 
   const value = {

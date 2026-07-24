@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Send, ShieldCheck, Clock, MessageCircle, CheckCircle2 } from "lucide-react";
 import { waLink, CRM_WEBHOOK_URL } from "../config.js";
 import { useLang } from "../i18n.jsx";
-import { attributionLines, sendLeadToCrm } from "../attribution.js";
+import { attributionLines, sendLeadToCrm, pushLeadConversion } from "../attribution.js";
 import { insertLeadToSupabase } from "../supabase.js";
 import { FunnelIllustration } from "./Decor.jsx";
 
@@ -13,7 +13,7 @@ const pointIcons = [Clock, ShieldCheck, CheckCircle2];
 export default function LeadForm({ onOpenPrivacy }) {
   const { t, lang } = useLang();
   const L = t.lead;
-  const [form, setForm] = useState({ name: "", phone: "", business: "", website: "", budget: "" });
+  const [form, setForm] = useState({ name: "", phone: "", email: "", business: "", website: "", budget: "" });
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
 
@@ -32,6 +32,7 @@ export default function LeadForm({ onOpenPrivacy }) {
       m.intro,
       `${m.name}: ${form.name}`,
       `${m.phone}: ${form.phone}`,
+      `${m.email}: ${form.email || m.none}`,
       `${m.biz}: ${form.business || m.none}`,
       `${m.website}: ${form.website || m.none}`,
       `${m.budget}: ${form.budget || m.none}`,
@@ -39,10 +40,19 @@ export default function LeadForm({ onOpenPrivacy }) {
       ...attributionLines(m.attr),
     ].join("\n");
 
+    // מעקב המרות ל-Google Tag Manager (Google Ads + Facebook + GA4)
+    // דוחף event: "form_success" עם user_data ל-Enhanced Conversions ו-click_id ל-Offline
+    pushLeadConversion({
+      name: form.name,
+      phone: form.phone,
+      email: form.email,
+    });
+
     // הכנסה ישירה ל-CRM (Supabase) — כולל כל נתוני הייחוס
     insertLeadToSupabase({
       name: form.name,
       phone: form.phone,
+      email: form.email,
       business: form.business,
       website: form.website,
       budget: form.budget,
@@ -53,6 +63,7 @@ export default function LeadForm({ onOpenPrivacy }) {
     sendLeadToCrm(CRM_WEBHOOK_URL, {
       name: form.name,
       phone: form.phone,
+      email: form.email,
       business: form.business,
       website: form.website,
       budget: form.budget,
@@ -119,6 +130,10 @@ export default function LeadForm({ onOpenPrivacy }) {
               <div className="field">
                 <label htmlFor="lead-phone">{L.phoneLabel}</label>
                 <input id="lead-phone" type="tel" inputMode="tel" placeholder={L.phonePh} value={form.phone} onChange={update("phone")} required />
+              </div>
+              <div className="field">
+                <label htmlFor="lead-email">{L.emailLabel}</label>
+                <input id="lead-email" type="email" inputMode="email" autoComplete="email" placeholder={L.emailPh} value={form.email} onChange={update("email")} />
               </div>
               <div className="field">
                 <label htmlFor="lead-biz">{L.bizLabel}</label>

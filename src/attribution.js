@@ -108,6 +108,43 @@ export function attributionLines(labels) {
   return lines;
 }
 
+/* נרמול טלפון ישראלי ל-E.164 (עם +972) — הפורמט שנדרש ל-Enhanced Conversions */
+function toE164IL(raw) {
+  const d = (raw || "").replace(/\D/g, "");
+  if (!d) return "";
+  if (d.startsWith("972")) return "+" + d;
+  if (d.startsWith("0")) return "+972" + d.slice(1);
+  return "+" + d;
+}
+
+/* ------------------------------------------------------------
+   דחיפת אירוע המרה ל-dataLayer עבור Google Tag Manager.
+   • event: "form_success" → מפעיל את הטריגר "form success" (Google Ads + FB + GA4)
+   • user_data              → Enhanced Conversions (GTM מצפין SHA-256 — לא מצפינים כאן)
+   • click_id               → נשמר לשיוך עתידי ב-Offline Conversions
+   ------------------------------------------------------------ */
+export function pushLeadConversion(lead) {
+  const a = getAttribution();
+  const [firstName, ...rest] = (lead.name || "").trim().split(/\s+/);
+
+  const user_data = {};
+  if (lead.email && /.+@.+\..+/.test(lead.email)) {
+    user_data.email = lead.email.trim().toLowerCase();
+  }
+  const phone = toE164IL(lead.phone);
+  if (phone) user_data.phone_number = phone;
+  if (firstName) user_data.address = { first_name: firstName, last_name: rest.join(" ") };
+
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: "form_success",
+    user_data,
+    click_id: a.click_id || "",
+    lead_platform: a.platform || "",
+    lead_channel: a.channel || "",
+  });
+}
+
 /* שולח את הליד + נתוני הייחוס ל-CRM webhook (אם הוגדר ב-config) */
 export async function sendLeadToCrm(webhookUrl, lead) {
   if (!webhookUrl) return;
