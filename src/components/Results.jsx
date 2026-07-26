@@ -84,10 +84,20 @@ const cases = [
 
 function HeadlineNumber({ value, decimals, locale }) {
   const { ref, formatted } = useCountUp(value, { decimals, duration: 2, locale });
+  const staticFormatted = value.toLocaleString(locale, {
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
+  });
+
   return (
-    <span ref={ref} className="case__big-num">
-      {formatted}
-    </span>
+    <>
+      <span ref={ref} className="case__big-num case__big-num--animated">
+        {formatted}
+      </span>
+      <span className="case__big-num case__big-num--mobile">
+        {staticFormatted}
+      </span>
+    </>
   );
 }
 

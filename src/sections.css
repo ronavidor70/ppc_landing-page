@@ -1218,6 +1218,10 @@
   display: inline-block;
 }
 
+.case__big-num--mobile {
+  display: none;
+}
+
 .case__big-num::after {
   content: "";
   position: absolute;
@@ -1336,6 +1340,14 @@
 @media (max-width: 680px) {
   .results__grid {
     grid-template-columns: 1fr;
+  }
+
+  .case__big-num--animated {
+    display: none;
+  }
+
+  .case__big-num--mobile {
+    display: inline-block;
   }
 }
 
