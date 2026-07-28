@@ -62,7 +62,7 @@ export function Coin({ size = 44, className = "", float = 12, duration = 4, dela
 }
 
 /* תג עגול מסתובב עם טקסט היקפי — קורא לפעולה */
-export function RotatingBadge({ href = "#lead", text = "בדיקת התאמה חינם · בלי התחייבות · " }) {
+export function RotatingBadge({ href = "#lead", text = "בדיקת התאמה · בלי התחייבות · " }) {
   return (
     <a href={href} className="rot-badge" aria-label={text.trim()}>
       <motion.svg
