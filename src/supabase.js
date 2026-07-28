@@ -3,7 +3,7 @@
 //  משתמש ב-REST API של Supabase — בלי ספריות נוספות.
 // ============================================================
 import { SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_LEADS_TABLE } from "./config.js";
-import { getAttribution } from "./attribution.js";
+import { getAttribution, getPpcAttribution } from "./attribution.js";
 
 /* נרמול טלפון ישראלי לפורמט בינלאומי (972...) — כמו הלידים של הבוט */
 function normalizePhone(raw) {
@@ -18,6 +18,7 @@ export async function insertLeadToSupabase(lead) {
   if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return { ok: false, skipped: true };
 
   const a = getAttribution();
+  const ppc = getPpcAttribution();
   const row = {
     // ---- שדות מהטופס ----
     name: lead.name || null,
@@ -37,6 +38,15 @@ export async function insertLeadToSupabase(lead) {
     utm_term: a.keyword || null,
     utm_content: a.ad || null,
     click_id: a.click_id || null,
+    // ---- Google Ads first-touch (שמות העמודות ב-Supabase) ----
+    attr_keyword: ppc.keyword,
+    attr_matchtype: ppc.matchtype,
+    attr_campaign: ppc.campaign,
+    attr_adgroup: ppc.adgroup,
+    attr_ad: ppc.ad,
+    attr_gclid: ppc.gclid,
+    attr_network: ppc.network,
+    attr_device: ppc.device,
   };
 
   try {

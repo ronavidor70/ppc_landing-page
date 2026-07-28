@@ -5,6 +5,77 @@
 // ============================================================
 
 const STORAGE = "ctr-attribution";
+const PPC_STORAGE = "ppc_attribution";
+
+const EMPTY_PPC_ATTRIBUTION = {
+  keyword: null,
+  matchtype: null,
+  campaign: null,
+  adgroup: null,
+  ad: null,
+  gclid: null,
+  network: null,
+  device: null,
+};
+
+function readPpcParam(url, primary, fallback) {
+  const primaryValue = url.get(primary);
+  if (primaryValue) return primaryValue;
+  if (!fallback) return null;
+  return url.get(fallback) || null;
+}
+
+function normalizePpcAttribution(value) {
+  return Object.fromEntries(
+    Object.keys(EMPTY_PPC_ATTRIBUTION).map((key) => [
+      key,
+      typeof value?.[key] === "string" && value[key] ? value[key] : null,
+    ]),
+  );
+}
+
+/*
+ * שומר first-touch של Google Ads לאורך הסשן.
+ * גם ביקור ללא פרמטרים נשמר כאובייקט עם null, כדי שלא יידרס בהמשך הסשן.
+ */
+export function capturePpcAttribution() {
+  try {
+    const saved = sessionStorage.getItem(PPC_STORAGE);
+    if (saved !== null) {
+      try {
+        return normalizePpcAttribution(JSON.parse(saved));
+      } catch {
+        return { ...EMPTY_PPC_ATTRIBUTION };
+      }
+    }
+
+    const url = new URLSearchParams(window.location.search);
+    const attribution = {
+      keyword: readPpcParam(url, "keyword"),
+      matchtype: readPpcParam(url, "matchtype"),
+      campaign: readPpcParam(url, "campaign", "campaignid"),
+      adgroup: readPpcParam(url, "adgroup", "adgroupid"),
+      ad: readPpcParam(url, "ad", "creative"),
+      gclid: readPpcParam(url, "gclid"),
+      network: readPpcParam(url, "network"),
+      device: readPpcParam(url, "device"),
+    };
+    sessionStorage.setItem(PPC_STORAGE, JSON.stringify(attribution));
+    return attribution;
+  } catch {
+    return { ...EMPTY_PPC_ATTRIBUTION };
+  }
+}
+
+export function getPpcAttribution() {
+  try {
+    const saved = sessionStorage.getItem(PPC_STORAGE);
+    if (saved === null) return { ...EMPTY_PPC_ATTRIBUTION };
+    return normalizePpcAttribution(JSON.parse(saved));
+  } catch {
+    return { ...EMPTY_PPC_ATTRIBUTION };
+  }
+}
 
 /* כל הפרמטרים שאנחנו קולטים מה-URL */
 const PARAMS = [

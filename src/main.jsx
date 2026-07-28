@@ -4,9 +4,10 @@ import "./index.css";
 import "./a11y.css";
 import App from "./App.jsx";
 import { LanguageProvider } from "./i18n.jsx";
-import { captureAttribution } from "./attribution.js";
+import { captureAttribution, capturePpcAttribution } from "./attribution.js";
 
 // לוכד את נתוני הקמפיין מה-URL מיד עם הכניסה (לפני שהמשתמש מנווט)
+capturePpcAttribution();
 captureAttribution();
 
 createRoot(document.getElementById("root")).render(
