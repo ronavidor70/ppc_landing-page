@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
-import { Search, Share2, Filter, LineChart } from "lucide-react";
+import { Search, Share2 } from "lucide-react";
 import { useLang } from "../i18n.jsx";
 
 const ease = [0.22, 1, 0.36, 1];
-const icons = [Search, Share2, Filter, LineChart];
+const platformIcons = [Search, Share2];
 
 export default function Services() {
   const { t } = useLang();
@@ -26,12 +26,33 @@ export default function Services() {
           </motion.div>
         </div>
 
-        <div className="services__grid">
+        <div className="method__grid">
+          {t.services.method.map((m, i) => (
+            <motion.div
+              key={m.num}
+              className="method__step"
+              initial={{ opacity: 0, y: 34 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.6, ease, delay: (i % 4) * 0.08 }}
+            >
+              <span className="method__num">{m.num}</span>
+              <h3 className="method__title">{m.title}</h3>
+              <p className="method__desc">{m.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="center">
+          <span className="services__channels-tag">{t.services.channelsTag}</span>
+        </div>
+
+        <div className="services__grid services__grid--platforms">
           {t.services.items.map((s, i) => {
-            const Icon = icons[i];
+            const Icon = platformIcons[i];
             return (
               <motion.article
-                key={i}
+                key={s.title}
                 className="service card"
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -39,7 +60,7 @@ export default function Services() {
                 transition={{ duration: 0.7, ease, delay: (i % 2) * 0.12 }}
               >
                 <div className="service__icon">
-                  <Icon size={24} />
+                  {Icon ? <Icon size={24} /> : null}
                 </div>
                 <h3>{s.title}</h3>
                 <p>{s.desc}</p>
