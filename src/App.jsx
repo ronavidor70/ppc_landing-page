@@ -6,6 +6,7 @@ import TrustBar from "./components/TrustBar.jsx";
 import Results from "./components/Results.jsx";
 import ClientsMarquee from "./components/ClientsMarquee.jsx";
 import RoasCalculator from "./components/RoasCalculator.jsx";
+import MarketTools from "./components/MarketTools.jsx";
 import Services from "./components/Services.jsx";
 import Process from "./components/Process.jsx";
 import WhyUs from "./components/WhyUs.jsx";
@@ -35,6 +36,7 @@ export default function App() {
         <Results />
         <ClientsMarquee />
         <RoasCalculator />
+        <MarketTools />
         <Services />
         <Process />
         <WhyUs />

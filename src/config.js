@@ -10,6 +10,10 @@ export const CRM_WEBHOOK_URL = import.meta.env.VITE_CRM_WEBHOOK_URL || "";
 export const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || "";
 export const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || "";
 export const SUPABASE_LEADS_TABLE = import.meta.env.VITE_SUPABASE_LEADS_TABLE || "leads";
+
+// ==== כלים חינם (מחקר מילים) — כתובת ה-Edge Function של Supabase ====
+// דוגמה: https://xxxx.supabase.co/functions/v1  (ריק = הווידג'ט עובר למצב fallback)
+export const TOOLS_API_URL = import.meta.env.VITE_TOOLS_API_URL || "";
 export const WHATSAPP_MESSAGE =
   "היי, הגעתי מדף הנחיתה של CTR ואשמח לבדיקת התאמה חינם לקמפיינים שלי";
 
