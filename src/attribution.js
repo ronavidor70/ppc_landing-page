@@ -188,15 +188,27 @@ function toE164IL(raw) {
   return "+" + d;
 }
 
+/* מזהה אירוע ייחודי — משמש ל-deduplication בין הפיקסל בדפדפן ל-CAPI/תג GTM */
+function makeEventId() {
+  try {
+    if (window.crypto?.randomUUID) return "lead_" + window.crypto.randomUUID();
+  } catch {
+    /* crypto לא זמין בדפדפנים ישנים — נופלים לגיבוי למטה */
+  }
+  return "lead_" + Date.now() + "_" + Math.random().toString(36).slice(2, 10);
+}
+
 /* ------------------------------------------------------------
-   דחיפת אירוע המרה ל-dataLayer עבור Google Tag Manager.
-   • event: "form_success" → מפעיל את הטריגר "form success" (Google Ads + FB + GA4)
-   • user_data              → Enhanced Conversions (GTM מצפין SHA-256 — לא מצפינים כאן)
-   • click_id               → נשמר לשיוך עתידי ב-Offline Conversions
+   דחיפת אירוע המרה בשליחת טופס.
+   1) dataLayer.form_success → מפעיל את הטריגר ב-GTM (Google Ads + FB + GA4)
+   2) fbq('track','Lead')    → סופר Lead ישירות בפיקסל פייסבוק, בלי תלות ב-GTM
+   • event_id זהה נשלח לשניהם → מאפשר ל-Meta לבטל ספירה כפולה (deduplication)
+   • user_data / click_id    → Enhanced/Offline Conversions (GTM מצפין SHA-256)
    ------------------------------------------------------------ */
 export function pushLeadConversion(lead) {
   const a = getAttribution();
   const [firstName, ...rest] = (lead.name || "").trim().split(/\s+/);
+  const eventId = makeEventId();
 
   const user_data = {};
   if (lead.email && /.+@.+\..+/.test(lead.email)) {
@@ -209,11 +221,27 @@ export function pushLeadConversion(lead) {
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({
     event: "form_success",
+    event_id: eventId,
     user_data,
     click_id: a.click_id || "",
     lead_platform: a.platform || "",
     lead_channel: a.channel || "",
   });
+
+  // ירייה ישירה של אירוע Lead לפיקסל פייסבוק (נטען דרך GTM).
+  // מוגן: יורה רק אם הפיקסל באמת טעון בדף.
+  try {
+    if (typeof window.fbq === "function") {
+      window.fbq(
+        "track",
+        "Lead",
+        { content_name: "landing_page_form", content_category: a.platform || "direct" },
+        { eventID: eventId },
+      );
+    }
+  } catch {
+    /* לא חוסמים את שליחת הטופס אם הפיקסל נכשל */
+  }
 }
 
 /* שולח את הליד + נתוני הייחוס ל-CRM webhook (אם הוגדר ב-config) */
