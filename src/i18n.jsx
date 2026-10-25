@@ -12,7 +12,6 @@ export const dict = {
       links: [
         { href: "#results", label: "תוצאות" },
         { href: "#calculator", label: "מחשבון ROAS" },
-        { href: "#tools", label: "כלים חינם" },
         { href: "#services", label: "שירותים" },
         { href: "#process", label: "איך זה עובד" },
         { href: "#faq", label: "שאלות נפוצות" },
@@ -326,7 +325,6 @@ export const dict = {
       links: [
         { href: "#results", label: "Results" },
         { href: "#calculator", label: "ROAS Calculator" },
-        { href: "#tools", label: "Free tools" },
         { href: "#services", label: "Services" },
         { href: "#process", label: "How it works" },
         { href: "#faq", label: "FAQ" },
