@@ -41,7 +41,18 @@
   gap: 32px;
 }
 
+@media (max-width: 1180px) {
+  .nav__links {
+    gap: 18px;
+  }
+
+  .nav__link {
+    font-size: 0.92rem;
+  }
+}
+
 .nav__link {
+  white-space: nowrap;
   font-size: 0.98rem;
   font-weight: 700;
   color: var(--ink-soft);
@@ -2273,6 +2284,576 @@
   .reason:nth-child(2),
   .reason:nth-child(4) {
     transform: none;
+  }
+}
+
+/* ================= VEYMU — סטודיו וידאו במתנה ================= */
+.veymu {
+  --veymu-bg: #0c0a08;
+  --veymu-violet: #7c5cff;
+  --veymu-cyan: #22d3ee;
+  background: var(--veymu-bg);
+  color: #fff;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.veymu .section-tag {
+  background: var(--yellow);
+  box-shadow: 2px 2px 0 rgba(255, 255, 255, 0.35);
+}
+
+.veymu .section-sub {
+  color: #b8b2a6;
+  max-width: 720px;
+}
+
+.veymu__glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.veymu__glow--violet {
+  width: 620px;
+  height: 520px;
+  top: -160px;
+  inset-inline-start: -180px;
+  background: radial-gradient(circle, rgba(124, 92, 255, 0.42), rgba(34, 211, 238, 0.12) 60%, transparent 72%);
+}
+
+.veymu__glow--amber {
+  width: 640px;
+  height: 520px;
+  bottom: -200px;
+  inset-inline-end: -200px;
+  background: radial-gradient(circle, rgba(255, 176, 32, 0.32), transparent 68%);
+}
+
+/* צהוב CTR שנמס לסגול-טורקיז של Veymu */
+.veymu__grad {
+  background: linear-gradient(100deg, #ffd23d 0%, #ff8a5c 32%, #b18cff 66%, #5fe3f5 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+[dir="rtl"] .veymu__grad {
+  background-image: linear-gradient(260deg, #ffd23d 0%, #ff8a5c 32%, #b18cff 66%, #5fe3f5 100%);
+}
+
+/* ---------- טלפון עם מודעת הריילס ---------- */
+.veymu__stage {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 72px;
+  max-width: 1040px;
+  margin: 64px auto 0;
+}
+
+.veymu__phone-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  perspective: 1400px;
+}
+
+.veymu__ambient {
+  position: absolute;
+  top: 4%;
+  left: -12%;
+  width: 124%;
+  height: 80%;
+  object-fit: cover;
+  filter: blur(64px) saturate(1.4);
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.veymu__phone {
+  position: relative;
+  z-index: 1;
+  width: 320px;
+  padding: 10px;
+  border-radius: 50px;
+  background: linear-gradient(145deg, #2c2824, #0d0b09);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 50px 100px -30px rgba(0, 0, 0, 0.9), inset 0 0 0 2px rgba(255, 255, 255, 0.05);
+  will-change: transform;
+}
+
+.veymu__screen {
+  position: relative;
+  aspect-ratio: 9 / 16;
+  border-radius: 40px;
+  overflow: hidden;
+  background: #000;
+}
+
+.veymu__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.veymu__island {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  z-index: 2;
+  width: 92px;
+  height: 26px;
+  border-radius: 20px;
+  background: #000;
+  transform: translateX(-50%);
+}
+
+.veymu__ai-badge {
+  position: absolute;
+  top: 48px;
+  inset-inline-start: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 100px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.veymu__rec {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff4d4d;
+  box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.6);
+  animation: veymu-rec 1.8s ease-out infinite;
+}
+
+@keyframes veymu-rec {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.6);
+  }
+  100% {
+    box-shadow: 0 0 0 9px rgba(255, 77, 77, 0);
+  }
+}
+
+.veymu__sound {
+  position: absolute;
+  top: 44px;
+  inset-inline-end: 12px;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  color: #fff;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.veymu__sound:hover {
+  background: rgba(0, 0, 0, 0.72);
+  transform: scale(1.08);
+}
+
+.veymu__sound[aria-pressed="true"] {
+  background: var(--yellow);
+  color: var(--ink);
+  border-color: var(--yellow);
+}
+
+.veymu__play {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 76px;
+  height: 76px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--ink);
+  background: var(--yellow);
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+/* פס "ממומן" בסגנון מודעת ריילס */
+.veymu__adbar {
+  position: absolute;
+  inset-inline: 10px;
+  bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 9px 9px 11px;
+  border-radius: 16px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.veymu__adbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.veymu__adbar-brand i {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  flex: none;
+  border-radius: 50%;
+  font-style: normal;
+  font-family: Georgia, serif;
+  font-weight: 700;
+  color: #1a1714;
+  background: #f3ece3;
+}
+
+.veymu__adbar-brand b {
+  display: block;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+}
+
+.veymu__adbar-brand small {
+  display: block;
+  font-size: 0.7rem;
+  opacity: 0.75;
+}
+
+.veymu__adbar-cta {
+  font-size: 0.8rem;
+  font-weight: 800;
+  padding: 7px 14px;
+  border-radius: 100px;
+  color: var(--ink);
+  background: #fff;
+  white-space: nowrap;
+}
+
+.veymu__caption {
+  position: relative;
+  z-index: 1;
+  max-width: 320px;
+  margin-top: 22px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #b8b2a6;
+}
+
+/* ---------- כרטיס המתנה ---------- */
+.veymu__side {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.veymu__ticket {
+  position: relative;
+  display: flex;
+  width: 100%;
+  max-width: 420px;
+  color: var(--ink);
+  filter: drop-shadow(0 22px 34px rgba(0, 0, 0, 0.55));
+}
+
+.veymu__ticket-main,
+.veymu__ticket-stub {
+  position: relative;
+  background: var(--yellow);
+  border: 2px solid var(--ink);
+}
+
+.veymu__ticket-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px 22px 16px;
+  border-start-start-radius: 16px;
+  border-end-start-radius: 16px;
+  border-inline-end: 2px dashed rgba(22, 19, 16, 0.55);
+}
+
+.veymu__ticket-stub {
+  width: 74px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-inline-start: none;
+  border-start-end-radius: 16px;
+  border-end-end-radius: 16px;
+  background: #ffd23d;
+}
+
+/* חריצי ניקוב בין הכרטיס לספח */
+.veymu__ticket-stub::before,
+.veymu__ticket-stub::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: -11px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--veymu-bg);
+  border: 2px solid var(--ink);
+}
+
+.veymu__ticket-stub::before {
+  top: -11px;
+}
+
+.veymu__ticket-stub::after {
+  bottom: -11px;
+}
+
+.veymu__ticket-stub span {
+  writing-mode: vertical-rl;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.22em;
+  direction: ltr;
+}
+
+.veymu__barcode {
+  width: 34px;
+  height: 46px;
+  background: repeating-linear-gradient(0deg, var(--ink) 0 2px, transparent 2px 4px, var(--ink) 4px 5px, transparent 5px 8px);
+  opacity: 0.85;
+}
+
+.veymu__ticket-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.veymu__ticket-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.45rem;
+  font-weight: 900;
+  line-height: 1.15;
+}
+
+.veymu__ticket-title img {
+  flex: none;
+  padding: 4px;
+  width: 42px;
+  height: 33px;
+  object-fit: contain;
+  background: var(--ink);
+  border-radius: 9px;
+}
+
+.veymu__ticket-price {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.veymu__ticket-price strong {
+  font-size: 2.3rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.veymu__ticket-price span {
+  font-size: 0.84rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--ink-soft);
+}
+
+.veymu__ticket-valid {
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 1.5px solid rgba(22, 19, 16, 0.2);
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+/* ---------- יתרונות, מודלים ו-CTA ---------- */
+.veymu__perks {
+  display: grid;
+  gap: 14px;
+}
+
+.veymu__perk {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 22px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+}
+
+.veymu__perk:hover {
+  transform: translateY(-3px);
+  border-color: rgba(177, 140, 255, 0.45);
+  background: rgba(124, 92, 255, 0.07);
+}
+
+.veymu__perk-icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  color: var(--ink);
+  background: var(--yellow);
+}
+
+.veymu__perk h3 {
+  font-size: 1.06rem;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.veymu__perk p {
+  font-size: 0.92rem;
+  color: #b8b2a6;
+}
+
+.veymu__models {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 70px auto 0;
+  max-width: 820px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #8f887c;
+}
+
+.veymu__models img {
+  flex: none;
+  width: 22px;
+  height: 16px;
+  object-fit: contain;
+}
+
+.veymu__cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 18px 28px;
+  margin-top: 40px;
+}
+
+.veymu__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 800;
+  color: #fff;
+  border-bottom: 2px solid rgba(177, 140, 255, 0.6);
+  padding-bottom: 2px;
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.veymu__link:hover {
+  color: #c9b8ff;
+  border-color: var(--veymu-cyan);
+}
+
+[dir="rtl"] .veymu__link svg {
+  transform: scaleX(-1);
+}
+
+@media (max-width: 900px) {
+  .veymu__stage {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 44px;
+    margin-top: 44px;
+  }
+
+  .veymu__phone {
+    width: min(300px, 78vw);
+  }
+
+  .veymu__side {
+    width: 100%;
+    max-width: 520px;
+    align-items: center;
+  }
+
+  .veymu__ticket {
+    max-width: 380px;
+  }
+
+  .veymu__models {
+    margin-top: 44px;
+  }
+}
+
+@media (max-width: 520px) {
+  .veymu__phone {
+    padding: 8px;
+    border-radius: 42px;
+  }
+
+  .veymu__screen {
+    border-radius: 34px;
+  }
+
+  .veymu__ticket-main {
+    padding: 16px 16px 14px;
+  }
+
+  .veymu__ticket-title {
+    font-size: 1.25rem;
+  }
+
+  .veymu__ticket-stub {
+    width: 60px;
+  }
+
+  .veymu__perk {
+    padding: 18px;
+  }
+
+  .veymu__models img {
+    display: none;
+  }
+
+  .veymu__cta .btn {
+    white-space: normal;
+    text-align: center;
   }
 }
 

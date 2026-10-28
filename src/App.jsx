@@ -10,6 +10,7 @@ import RoasCalculator from "./components/RoasCalculator.jsx";
 import Services from "./components/Services.jsx";
 import Process from "./components/Process.jsx";
 import WhyUs from "./components/WhyUs.jsx";
+import Veymu from "./components/Veymu.jsx";
 import Faq from "./components/Faq.jsx";
 import LeadForm from "./components/LeadForm.jsx";
 import Footer from "./components/Footer.jsx";
@@ -40,6 +41,7 @@ export default function App() {
         <Services />
         <Process />
         <WhyUs />
+        <Veymu />
         <Faq />
         <LeadForm onOpenPrivacy={() => setPrivacyOpen(true)} />
       </main>
