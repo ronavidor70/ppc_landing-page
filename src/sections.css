@@ -1913,6 +1913,883 @@
   }
 }
 
+/* ================= LEAK GAME — מצא את הדליפות ================= */
+.game {
+  background:
+    radial-gradient(ellipse 50% 45% at 10% 10%, rgba(255, 107, 74, 0.1), transparent 65%),
+    radial-gradient(ellipse 45% 40% at 92% 90%, rgba(255, 201, 19, 0.22), transparent 65%),
+    var(--bg);
+  overflow: clip;
+}
+
+.game__frame {
+  position: relative;
+  margin-top: 56px;
+  border-radius: var(--radius);
+  box-shadow: 8px 9px 0 var(--ink);
+  overflow: clip;
+}
+
+/* ---- HUD ---- */
+.game__hud {
+  position: sticky;
+  top: var(--nav-h);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 22px;
+  background: var(--ink);
+  color: #fff;
+}
+
+.game__timer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.game__timer svg {
+  color: var(--yellow);
+  flex-shrink: 0;
+}
+
+.game__secs {
+  display: inline-block;
+  min-width: 2ch;
+  font-size: 1.35rem;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+
+.game__timer-bar {
+  flex: 1;
+  height: 8px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.14);
+  overflow: hidden;
+}
+
+.game__timer-bar span {
+  display: block;
+  height: 100%;
+  background: var(--yellow);
+  border-radius: inherit;
+  transform-origin: right;
+  transition: transform 0.12s linear, background 0.3s ease;
+}
+
+[dir="ltr"] .game__timer-bar span {
+  transform-origin: left;
+}
+
+.game__hud.is-urgent .game__timer-bar span {
+  background: var(--coral);
+}
+
+.game__hud.is-urgent .game__secs {
+  color: var(--coral);
+}
+
+.game__count {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.game__count-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  opacity: 0.75;
+  margin-inline-end: 4px;
+}
+
+.game__dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.game__dot.is-on {
+  background: var(--coral);
+  border-color: var(--coral);
+  transform: scale(1.15);
+}
+
+.game__done {
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 7px 14px;
+  border-radius: 100px;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  color: #fff;
+  transition: background 0.2s ease;
+}
+
+.game__done:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* ---- במה ---- */
+.game__stage {
+  position: relative;
+  background: #f6f4ef;
+  padding: 22px;
+}
+
+/* ---- החשבון המדומה ---- */
+.acct {
+  background: #fff;
+  border: 1px solid #e3ded3;
+  border-radius: 14px;
+  overflow: hidden;
+  font-size: 0.92rem;
+  transition: filter 0.4s ease, opacity 0.4s ease;
+}
+
+.acct.is-locked {
+  filter: blur(3px);
+  opacity: 0.7;
+  pointer-events: none;
+  user-select: none;
+}
+
+.acct__bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 16px;
+  border-bottom: 1px solid #ece7dc;
+  background: #fbfaf7;
+}
+
+.acct__dots {
+  display: flex;
+  gap: 5px;
+}
+
+.acct__dots i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #e2dccf;
+}
+
+.acct__app {
+  font-weight: 800;
+  color: var(--ink-soft);
+}
+
+.acct__camp {
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.acct__status {
+  margin-inline-start: auto;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--green);
+  background: var(--green-bg);
+  padding: 3px 10px;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+
+.acct__kpis {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid #ece7dc;
+}
+
+.acct__kpi {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 16px;
+  border-inline-start: 1px solid #ece7dc;
+}
+
+.acct__kpi:first-child {
+  border-inline-start: 0;
+}
+
+.acct__kpi span {
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.acct__kpi strong {
+  font-size: 1.15rem;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+
+.acct__panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  padding: 14px;
+}
+
+.acct__panel--settings,
+.acct__panel--ads {
+  grid-column: 1 / -1;
+}
+
+.acct__panel--ads .acct__rows {
+  grid-template-columns: 1fr 1fr;
+}
+
+.acct__panel h4 {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  padding-inline: 4px;
+}
+
+.acct__rows {
+  display: grid;
+  gap: 8px;
+}
+
+.acct__panel--settings .acct__rows {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.acct__row {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  padding: 11px 14px;
+  text-align: start;
+  background: #fff;
+  border: 1.5px solid #ece7dc;
+  border-radius: 10px;
+  cursor: zoom-in;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.acct__row:hover {
+  border-color: var(--ink);
+  background: var(--yellow-bg);
+}
+
+.acct__row:active {
+  transform: scale(0.98);
+}
+
+.acct__label {
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.acct__value {
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.35;
+}
+
+.acct__row.is-found {
+  border-color: var(--coral);
+  background: #fff1ed;
+  cursor: default;
+  box-shadow: 0 0 0 3px rgba(255, 107, 74, 0.18);
+}
+
+.acct__row.is-found .acct__value {
+  color: #c2341a;
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}
+
+.acct__row.is-wrong {
+  border-color: #cfe9dd;
+  background: #f4fbf7;
+  cursor: default;
+  animation: game-shake 0.4s ease;
+}
+
+.acct__mark {
+  position: absolute;
+  top: 8px;
+  inset-inline-end: 8px;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  color: #fff;
+}
+
+.acct__mark--leak {
+  background: var(--coral);
+}
+
+.acct__mark--ok {
+  background: var(--green);
+}
+
+@keyframes game-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-3px); }
+}
+
+/* ---- מסך פתיחה ---- */
+.game__intro {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(255, 252, 245, 0.35);
+}
+
+.game__intro-card {
+  width: min(480px, 100%);
+  text-align: center;
+  padding: 32px 30px 30px;
+  background: #fff;
+  border: 2.5px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 6px 7px 0 var(--ink);
+}
+
+.game__intro-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  margin-bottom: 12px;
+  border-radius: 50%;
+  background: var(--yellow);
+  border: 2px solid var(--ink);
+  transform: rotate(-8deg);
+}
+
+.game__intro-card h3 {
+  font-size: 1.5rem;
+  font-weight: 900;
+  line-height: 1.25;
+  margin-bottom: 16px;
+}
+
+.game__rules {
+  list-style: none;
+  display: grid;
+  gap: 9px;
+  margin-bottom: 18px;
+  text-align: start;
+}
+
+.game__rules li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.game__rules li span {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  font-weight: 900;
+  background: var(--cream);
+  border: 1.5px solid var(--ink);
+}
+
+.game__prize-chips {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.game__chip {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 9px 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--ink-soft);
+  border: 1.5px dashed var(--border-strong);
+  border-radius: 12px;
+  background: var(--bg);
+}
+
+.game__chip strong {
+  direction: ltr;
+  unicode-bidi: isolate;
+  font-size: 0.95rem;
+  font-weight: 900;
+  color: var(--ink);
+}
+
+.game__chip--top {
+  border: 1.5px solid var(--ink);
+  background: var(--yellow);
+  color: var(--ink);
+}
+
+.game__start {
+  width: 100%;
+}
+
+/* ---- הודעת הסבר ---- */
+/* קבוע לתחתית המסך — ההסבר תמיד נראה, גם כשגוללים בתוך החשבון */
+.game__toast-wrap {
+  position: fixed;
+  inset-inline: 16px;
+  bottom: 24px;
+  z-index: 60;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.game__toast {
+  width: min(560px, 100%);
+  padding: 14px 18px;
+  border-radius: 16px;
+  border: 2px solid var(--ink);
+  box-shadow: 4px 5px 0 var(--ink);
+  background: #fff;
+}
+
+.game__toast strong {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 900;
+}
+
+.game__toast p {
+  margin-top: 4px;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.game__toast--leak strong svg {
+  color: var(--coral);
+  flex-shrink: 0;
+}
+
+.game__toast--fine {
+  width: auto;
+  background: var(--green-bg);
+}
+
+.game__toast--fine strong svg {
+  color: var(--green);
+}
+
+.game__toast-pen {
+  margin-inline-start: 6px;
+  padding: 2px 8px;
+  font-size: 0.8rem;
+  border-radius: 100px;
+  background: var(--ink);
+  color: #fff;
+  direction: ltr;
+}
+
+/* ---- מסך תוצאה ---- */
+.gres {
+  padding: 36px;
+}
+
+.gres__head {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 30px;
+}
+
+.gres__head h3 {
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+
+.gres__head p {
+  color: var(--muted);
+  max-width: 620px;
+}
+
+.gres__score {
+  flex-shrink: 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  padding-top: 30px;
+  width: 108px;
+  height: 108px;
+  border-radius: 50%;
+  background: var(--yellow);
+  border: 2.5px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+  font-size: 1.2rem;
+  font-weight: 800;
+  direction: ltr;
+  transform: rotate(-6deg);
+}
+
+.gres__score strong {
+  font-size: 2.6rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.gres__grid {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 26px;
+  align-items: start;
+}
+
+/* מתנה */
+.gres__prize {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 28px;
+  border-radius: 20px;
+  border: 2px solid var(--ink);
+  background: linear-gradient(165deg, #fffdf7, var(--yellow-bg));
+}
+
+.gres__sp-1 {
+  top: 18px;
+  inset-inline-end: 22px;
+}
+
+.gres__sp-2 {
+  top: 54px;
+  inset-inline-end: 56px;
+}
+
+.gres__gift {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  background: var(--coral);
+  color: #fff;
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.gres__prize-label {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--muted);
+}
+
+.gres__prize-text {
+  margin-top: -8px;
+  font-size: 1.25rem;
+  font-weight: 900;
+  line-height: 1.35;
+}
+
+.gres__code {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 10px 10px 16px;
+  background: #fff;
+  border: 2px dashed var(--ink);
+  border-radius: 14px;
+  direction: ltr;
+}
+
+.gres__code code {
+  flex: 1;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+.gres__code button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  border-radius: 100px;
+  background: var(--ink);
+  color: #fff;
+}
+
+.gres__code--locked {
+  color: var(--muted);
+  border-color: var(--border-strong);
+  justify-content: center;
+}
+
+.gres__code--locked code {
+  flex: 0 1 auto;
+  filter: blur(1.5px);
+}
+
+.gres__form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.gres__form-title {
+  font-weight: 900;
+  font-size: 1.05rem;
+}
+
+.gres__form .field input {
+  background: #fff;
+}
+
+.gres__submit {
+  width: 100%;
+  padding-block: 17px;
+}
+
+.gres__claimed {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.gres__valid {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+.gres__note {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.gres__wa {
+  width: 100%;
+}
+
+.gres__terms {
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* פירוט הדליפות */
+.gres__list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.gres__leak {
+  position: relative;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1.5px solid var(--border);
+  background: #fff;
+}
+
+.gres__leak strong {
+  display: block;
+  font-weight: 900;
+  margin-bottom: 2px;
+  padding-inline-end: 70px;
+}
+
+.gres__leak p {
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.gres__leak-tag {
+  position: absolute;
+  top: 12px;
+  inset-inline-end: 12px;
+  font-size: 0.72rem;
+  font-weight: 900;
+  padding: 3px 10px;
+  border-radius: 100px;
+}
+
+.gres__leak.is-found .gres__leak-tag {
+  background: var(--green-bg);
+  color: var(--green);
+}
+
+.gres__leak.is-missed {
+  border-color: rgba(255, 107, 74, 0.45);
+  background: #fffaf8;
+}
+
+.gres__leak.is-missed .gres__leak-tag {
+  background: #ffe6df;
+  color: #c2341a;
+}
+
+.gres__replay {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  font-weight: 800;
+  font-size: 0.92rem;
+  border-bottom: 1.5px solid currentColor;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 900px) {
+  .gres__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .acct__panel--settings .acct__rows {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .game__frame {
+    box-shadow: 5px 6px 0 var(--ink);
+  }
+
+  .game__hud {
+    gap: 12px;
+    padding: 12px 14px;
+  }
+
+  .game__count-label {
+    display: none;
+  }
+
+  .game__dot {
+    width: 11px;
+    height: 11px;
+  }
+
+  .game__done {
+    padding: 6px 10px;
+    font-size: 0.78rem;
+  }
+
+  .game__stage {
+    padding: 10px;
+  }
+
+  .acct {
+    font-size: 0.84rem;
+  }
+
+  .acct__camp {
+    display: none;
+  }
+
+  .acct__kpis {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .acct__kpi {
+    padding: 9px 12px;
+  }
+
+  .acct__kpi:nth-child(3) {
+    border-inline-start: 0;
+  }
+
+  .acct__kpi:nth-child(n + 3) {
+    border-top: 1px solid #ece7dc;
+  }
+
+  .acct__panels {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 10px;
+  }
+
+  .acct__panel--ads .acct__rows {
+    grid-template-columns: 1fr;
+  }
+
+  .acct__row {
+    padding: 9px 11px;
+  }
+
+  .game__intro {
+    align-items: start;
+    padding: 14px 10px;
+  }
+
+  .game__intro-card {
+    padding: 24px 18px 20px;
+    box-shadow: 4px 5px 0 var(--ink);
+  }
+
+  .game__intro-card h3 {
+    font-size: 1.3rem;
+  }
+
+  .game__toast-wrap {
+    inset-inline: 12px;
+    bottom: 16px;
+  }
+
+  .gres {
+    padding: 22px 16px;
+  }
+
+  .gres__head {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+  }
+
+  .gres__score {
+    width: 92px;
+    height: 92px;
+    padding-top: 24px;
+  }
+
+  .gres__prize {
+    padding: 22px 18px;
+  }
+}
+
 /* ================= SERVICES ================= */
 .services {
   background: var(--bg);

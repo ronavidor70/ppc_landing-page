@@ -10,6 +10,8 @@ export const CRM_WEBHOOK_URL = import.meta.env.VITE_CRM_WEBHOOK_URL || "";
 export const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || "";
 export const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || "";
 export const SUPABASE_LEADS_TABLE = import.meta.env.VITE_SUPABASE_LEADS_TABLE || "leads";
+// עמודות המשחק (game_score / game_prize / coupon_code) — להפעיל רק אחרי ALTER TABLE
+export const SUPABASE_GAME_COLUMNS = import.meta.env.VITE_SUPABASE_GAME_COLUMNS === "true";
 
 // ==== כלים חינם (מחקר מילים) — כתובת ה-Edge Function של Supabase ====
 // דוגמה: https://xxxx.supabase.co/functions/v1  (ריק = הווידג'ט עובר למצב fallback)

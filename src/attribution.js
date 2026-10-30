@@ -226,6 +226,7 @@ export function pushLeadConversion(lead) {
     click_id: a.click_id || "",
     lead_platform: a.platform || "",
     lead_channel: a.channel || "",
+    lead_source: lead.source || "lead_form",
   });
 
   // ירייה ישירה של אירוע Lead לפיקסל פייסבוק (נטען דרך GTM).
@@ -235,7 +236,7 @@ export function pushLeadConversion(lead) {
       window.fbq(
         "track",
         "Lead",
-        { content_name: "landing_page_form", content_category: a.platform || "direct" },
+        { content_name: lead.source || "landing_page_form", content_category: a.platform || "direct" },
         { eventID: eventId },
       );
     }

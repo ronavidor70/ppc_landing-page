@@ -6,6 +6,7 @@ import TrustBar from "./components/TrustBar.jsx";
 import Results from "./components/Results.jsx";
 import ClientsMarquee from "./components/ClientsMarquee.jsx";
 import RoasCalculator from "./components/RoasCalculator.jsx";
+import LeakGame from "./components/LeakGame.jsx";
 // import MarketTools from "./components/MarketTools.jsx"; // מוסתר זמנית — להחזרה: בטל הערה כאן ובשורת <MarketTools /> למטה, והחזר את קישור "#tools" בתפריט (i18n.jsx)
 import Services from "./components/Services.jsx";
 import Process from "./components/Process.jsx";
@@ -37,6 +38,7 @@ export default function App() {
         <Results />
         <ClientsMarquee />
         <RoasCalculator />
+        <LeakGame onOpenPrivacy={() => setPrivacyOpen(true)} />
         {/* <MarketTools /> */}
         <Services />
         <Process />

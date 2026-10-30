@@ -2,7 +2,7 @@
 //  הכנסת לידים ישירות ל-Supabase (ה-CRM)
 //  משתמש ב-REST API של Supabase — בלי ספריות נוספות.
 // ============================================================
-import { SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_LEADS_TABLE } from "./config.js";
+import { SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_LEADS_TABLE, SUPABASE_GAME_COLUMNS } from "./config.js";
 import { getAttribution, getPpcAttribution } from "./attribution.js";
 
 /* נרמול טלפון ישראלי לפורמט בינלאומי (972...) — כמו הלידים של הבוט */
@@ -48,6 +48,14 @@ export async function insertLeadToSupabase(lead) {
     attr_network: ppc.network,
     attr_device: ppc.device,
   };
+
+  // ---- ליד מהמשחק "מצא את הדליפות" ----
+  // העמודות נשלחות רק אחרי שנוספו לטבלה (VITE_SUPABASE_GAME_COLUMNS=true), אחרת ה-insert ייכשל
+  if (lead.game && SUPABASE_GAME_COLUMNS) {
+    row.game_score = lead.game.score;
+    row.game_prize = lead.game.prize;
+    row.coupon_code = lead.game.coupon;
+  }
 
   try {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/${SUPABASE_LEADS_TABLE}`, {
