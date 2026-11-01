@@ -5,7 +5,7 @@ import { useLang } from "../i18n.jsx";
 
 const links = [
   { href: "/", label: "דף הבית" },
-  { href: "/blog/", label: "בלוג", current: true },
+  { href: "/blog", label: "בלוג", current: true },
 ];
 
 /* התפריט של הבלוג: אותו עיצוב כמו בדף הראשי. קישור כמו /#faq פותח את הדף הראשי בראש שלו, ולכן אין כאן קישורים לאזורים. */

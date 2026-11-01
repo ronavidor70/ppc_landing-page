@@ -42,7 +42,7 @@ function postSchema(post) {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "בלוג", item: absolute("/blog/") },
+        { "@type": "ListItem", position: 1, name: "בלוג", item: absolute("/blog") },
         { "@type": "ListItem", position: 2, name: post.title, item: url },
       ],
     },
@@ -54,7 +54,7 @@ export function buildHead(route) {
   const post = route.post;
   const title = pageTitle(route);
   const description = post ? post.description : BLOG_DESCRIPTION;
-  const path = post ? postPath(post) : "/blog/";
+  const path = post ? postPath(post) : "/blog";
   const image = absolute(post ? post.cover : posts[0].cover);
 
   const tags = [
@@ -80,7 +80,7 @@ export function buildHead(route) {
 export function buildSitemap() {
   const urls = [
     { loc: absolute("/") },
-    { loc: absolute("/blog/"), lastmod: posts[0].date },
+    { loc: absolute("/blog"), lastmod: posts[0].date },
     ...posts.map((post) => ({ loc: absolute(postPath(post)), lastmod: post.date })),
   ];
   const entries = urls.map(

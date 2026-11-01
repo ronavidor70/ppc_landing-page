@@ -8,7 +8,7 @@ export const categories = [...new Set(posts.map((post) => post.category))];
 
 export const loadPostBody = (slug) => bodyLoaders[`../content/blog/${slug}.md`]();
 
-export const postPath = (post) => `/blog/${post.slug}/`;
+export const postPath = (post) => `/blog/${post.slug}`;
 
 /* מאמרים מאותה קטגוריה קודם, ואחריהם האחרונים שפורסמו */
 export function relatedPosts(post, limit = 3) {

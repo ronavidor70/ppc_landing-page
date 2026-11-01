@@ -17,6 +17,8 @@ for (const path of paths) {
   const dir = join(OUT_DIR, path)
   await mkdir(dir, { recursive: true })
   await writeFile(join(dir, 'index.html'), page)
+  // ב-Render תיקייה לא נחשבת קובץ קיים, ולכן /blog צריך גם קובץ blog.html
+  await writeFile(`${dir}.html`, page)
 }
 
 await writeFile(join(OUT_DIR, 'sitemap.xml'), buildSitemap())

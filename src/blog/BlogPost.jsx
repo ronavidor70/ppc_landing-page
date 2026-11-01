@@ -17,7 +17,7 @@ export default function BlogPost({ post, body }) {
             <nav className="blog-crumbs" aria-label="breadcrumb">
               <a href="/">דף הבית</a>
               <span aria-hidden="true">/</span>
-              <a href="/blog/">בלוג</a>
+              <a href="/blog">בלוג</a>
               <span aria-hidden="true">/</span>
               <span aria-current="page">{post.category}</span>
             </nav>

@@ -25,7 +25,7 @@ const blogLang = {
       ...he.nav,
       links: [
         { href: "/", label: "דף הבית" },
-        { href: "/blog/", label: "בלוג" },
+        { href: "/blog", label: "בלוג" },
       ],
     },
   },
@@ -36,7 +36,7 @@ function NotFound() {
     <section className="blog-hero center">
       <div className="container">
         <h1 className="section-title">המאמר לא נמצא</h1>
-        <a href="/blog/" className="btn btn-primary">
+        <a href="/blog" className="btn btn-primary">
           לכל המאמרים
         </a>
       </div>

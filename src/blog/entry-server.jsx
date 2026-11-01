@@ -5,7 +5,7 @@ import { buildHead } from "./seo.js";
 
 export { buildSitemap, buildRobots } from "./seo.js";
 
-export const paths = ["/blog/", ...posts.map(postPath)];
+export const paths = ["/blog", ...posts.map(postPath)];
 
 export async function render(path) {
   const route = matchRoute(path);
