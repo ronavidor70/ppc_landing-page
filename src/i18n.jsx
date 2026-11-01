@@ -17,6 +17,7 @@ export const dict = {
         { href: "#process", label: "איך זה עובד" },
         { href: "#veymu", label: "Veymu 🎁" },
         { href: "#faq", label: "שאלות נפוצות" },
+        { href: "/blog/", label: "בלוג" },
       ],
       cta: "בדיקת התאמה",
       waAria: "דברו איתנו בוואטסאפ",
@@ -906,7 +907,7 @@ export const dict = {
   },
 };
 
-const LangContext = createContext(null);
+export const LangContext = createContext(null);
 const DEFAULT_LANG = "he";
 
 function readStoredLanguage() {
