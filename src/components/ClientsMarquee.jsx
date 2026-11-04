@@ -15,6 +15,7 @@ const logos = [
   { src: "/clients/polak.jpg", alt: "Polak" },
   { src: "/clients/client7.jpeg", alt: "HaMila HaAcharona" },
   { src: "/clients/client8.webp", alt: "Client" },
+  { src: "/clients/cocochoco.svg", alt: "COCOCHOCO Professional" },
 ];
 
 export default function ClientsMarquee() {
