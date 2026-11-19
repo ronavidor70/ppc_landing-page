@@ -8,7 +8,7 @@ export default function Nav() {
   const { t, toggle } = useLang();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const links = t.nav.links;
+  const links = t.nav.links.filter((l) => !l.footerOnly);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);

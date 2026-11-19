@@ -18,7 +18,7 @@ export const dict = {
         { href: "#ai-bot", label: "בוט AI 🤖" },
         { href: "#veymu", label: "Veymu 🎁" },
         { href: "#faq", label: "שאלות נפוצות" },
-        { href: "/blog", label: "בלוג" },
+        { href: "/blog", label: "בלוג", footerOnly: true }, // מוסתר מהתפריט העליון, נשאר בפוטר
       ],
       cta: "בדיקת התאמה",
       waAria: "דברו איתנו בוואטסאפ",
