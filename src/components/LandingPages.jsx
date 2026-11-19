@@ -8,13 +8,16 @@ import {
   FlaskConical,
   Gauge,
   LoaderCircle,
+  Bell,
   MessageCircle,
   MousePointerClick,
-  Phone,
+  Play,
   Rocket,
+  Sparkles,
   Split,
   Star,
   Target,
+  TrendingUp,
   Turtle,
   X,
 } from "lucide-react";
@@ -174,7 +177,7 @@ export default function LandingPages() {
               <span className="lpd__note">{D.note}</span>
             </div>
 
-            <div className="lpd__phone-wrap">
+            <div className={`lpd__phone-wrap${isNew ? " is-new" : ""}`}>
               {/* תוויות שמסבירות מה רואים */}
               {M.pins.map((p, i) => (
                 <span
@@ -313,66 +316,186 @@ function OldPage({ P, loading }) {
   );
 }
 
-/* הדף של CTR: מהיר, ממוקד, פעולה אחת ברורה */
+/* הדף של CTR: דף בסגנון SaaS שגולל את עצמו, מהגיבור ועד ההרשמה */
 function NewPage({ P }) {
+  const D = P.dash;
   return (
     <div className="lpd-new">
-      <div className="lpd-new__hero">
-        <div className="lpd-new__top">
-          <span className="lpd-new__logo">
-            <i>{P.logoMark}</i>
-            {P.logo}
+      <div className="lpd-new__scroll">
+        <div className="lpd-new__hero">
+          <span className="lpd-new__mesh" aria-hidden="true">
+            <i />
+            <i />
+            <i />
           </span>
-          <span className="lpd-new__rating">
-            <Star size={11} fill="currentColor" />
-            {P.rating}
+          <span className="lpd-new__grid" aria-hidden="true" />
+
+          <div className="lpd-new__nav">
+            <span className="lpd-new__brand">
+              <i />
+              {P.brand}
+            </span>
+            <span className="lpd-new__login">{P.login}</span>
+          </div>
+
+          <span className="lpd-new__badge">
+            <Sparkles size={10} />
+            {P.badge}
+          </span>
+          <h4>
+            {P.titleA}
+            <br />
+            <em>{P.titleB}</em>
+          </h4>
+          <p>{P.sub}</p>
+
+          <div className="lpd-new__ctas">
+            <b className="lpd-new__btn">{P.cta}</b>
+            <span className="lpd-new__ghost">
+              <Play size={9} fill="currentColor" />
+              {P.ghost}
+            </span>
+          </div>
+
+          <div className="lpd-new__social">
+            <span className="lpd-new__avatars">
+              <i>N</i>
+              <i>D</i>
+              <i>R</i>
+              <i>A</i>
+            </span>
+            <span>
+              <Star size={10} fill="currentColor" />
+              {P.rating}
+            </span>
+          </div>
+
+          {/* מוקאפ של המוצר */}
+          <div className="lpd-new__dash">
+            <div className="lpd-new__dash-top">
+              <span className="lpd-new__dots">
+                <i />
+                <i />
+                <i />
+              </span>
+              <span>{D.title}</span>
+            </div>
+            <div className="lpd-new__kpis">
+              <span>
+                <small>{D.revLabel}</small>
+                <b className="lpd-new__iso">{D.rev}</b>
+                <em className="lpd-new__iso">{D.revDelta}</em>
+              </span>
+              <span>
+                <small>{D.roasLabel}</small>
+                <b className="lpd-new__iso">{D.roas}</b>
+                <em className="lpd-new__iso">{D.roasDelta}</em>
+              </span>
+            </div>
+            <svg className="lpd-new__chart" viewBox="0 0 220 64" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="lpdArea" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.55" />
+                  <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0" />
+                </linearGradient>
+                <linearGradient id="lpdLine" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor="#22d3ee" />
+                  <stop offset="100%" stopColor="#a78bfa" />
+                </linearGradient>
+              </defs>
+              <path
+                className="lpd-new__area"
+                d="M0 54 C18 50 26 40 44 42 S70 30 88 34 S118 20 136 24 S168 10 186 12 S210 4 220 4 L220 64 L0 64 Z"
+                fill="url(#lpdArea)"
+              />
+              <path
+                className="lpd-new__line"
+                d="M0 54 C18 50 26 40 44 42 S70 30 88 34 S118 20 136 24 S168 10 186 12 S210 4 220 4"
+                fill="none"
+                stroke="url(#lpdLine)"
+                strokeWidth="2.4"
+                strokeLinecap="round"
+              />
+            </svg>
+            <div className="lpd-new__ai">
+              <span className="lpd-new__ai-icon">
+                <Sparkles size={10} />
+              </span>
+              <span>{D.ai}</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="lpd-new__logos">
+          <small>{P.logosLabel}</small>
+          <span>
+            {P.logos.map((l) => (
+              <b key={l}>{l}</b>
+            ))}
           </span>
         </div>
-        <span className="lpd-new__kicker">{P.kicker}</span>
-        <h4>
-          {P.titleA}
-          <mark>{P.titleMark}</mark>
-        </h4>
-        <p>{P.sub}</p>
-        <div className="lpd-new__form">
-          <span>{P.name}</span>
-          <span className="lpd-new__ltr">{P.phone}</span>
-          <b className="lpd-new__cta">{P.cta}</b>
+
+        {/* בנטו */}
+        <div className="lpd-new__bento">
+          <div className="lpd-new__cell lpd-new__cell--wide">
+            <span className="lpd-new__cell-icon">
+              <TrendingUp size={12} />
+            </span>
+            <b>{P.bento[0].title}</b>
+            <small>{P.bento[0].desc}</small>
+            <span className="lpd-new__bars" aria-hidden="true">
+              {[38, 52, 44, 66, 58, 80, 96].map((h, i) => (
+                <i key={i} style={{ height: `${h}%`, animationDelay: `${0.4 + i * 0.07}s` }} />
+              ))}
+            </span>
+          </div>
+          <div className="lpd-new__cell">
+            <span className="lpd-new__cell-icon lpd-new__cell-icon--pink">
+              <Bell size={12} />
+            </span>
+            <b>{P.bento[1].title}</b>
+            <small>{P.bento[1].desc}</small>
+          </div>
+          <div className="lpd-new__cell">
+            <span className="lpd-new__apps" aria-hidden="true">
+              <i style={{ background: "#4285f4" }}>G</i>
+              <i style={{ background: "#0866ff" }}>M</i>
+              <i style={{ background: "#95bf47" }}>S</i>
+              <i style={{ background: "#111" }}>T</i>
+            </span>
+            <b>{P.bento[2].title}</b>
+            <small>{P.bento[2].desc}</small>
+          </div>
+          <div className="lpd-new__cell lpd-new__cell--wide lpd-new__cell--dark">
+            <strong>{P.bento[3].big}</strong>
+            <span>
+              <b>{P.bento[3].title}</b>
+              <small>{P.bento[3].desc}</small>
+            </span>
+          </div>
         </div>
-        <small className="lpd-new__micro">
-          <Check size={11} strokeWidth={3} />
-          {P.micro}
-        </small>
-      </div>
 
-      <div className="lpd-new__proof">
-        {P.stats.map((s) => (
-          <span key={s.label}>
-            <b>{s.value}</b>
-            <small>{s.label}</small>
+        <div className="lpd-new__quote">
+          <span className="lpd-new__stars">
+            {[0, 1, 2, 3, 4].map((i) => (
+              <Star key={i} size={9} fill="currentColor" />
+            ))}
           </span>
-        ))}
-      </div>
+          <p>{P.quote}</p>
+          <small>{P.quoteBy}</small>
+        </div>
 
-      <div className="lpd-new__review">
-        <span className="lpd-new__stars">
-          {[0, 1, 2, 3, 4].map((i) => (
-            <Star key={i} size={10} fill="currentColor" />
-          ))}
-        </span>
-        <p>{P.review}</p>
-        <small>{P.reviewer}</small>
+        <div className="lpd-new__final">
+          <b>{P.finalTitle}</b>
+          <small>{P.finalSub}</small>
+          <span className="lpd-new__field">{P.email}</span>
+          <span className="lpd-new__btn lpd-new__btn--full">{P.finalCta}</span>
+        </div>
       </div>
 
       <div className="lpd-new__sticky">
-        <span className="lpd-new__sticky-wa">
-          <MessageCircle size={13} />
-          {P.stickyWa}
-        </span>
-        <span className="lpd-new__sticky-call">
-          <Phone size={13} />
-          {P.stickyCall}
-        </span>
+        <span>{P.stickyNote}</span>
+        <b className="lpd-new__btn">{P.sticky}</b>
       </div>
     </div>
   );
