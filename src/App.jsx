@@ -11,6 +11,7 @@ import LeakGame from "./components/LeakGame.jsx";
 import Services from "./components/Services.jsx";
 import Process from "./components/Process.jsx";
 import WhyUs from "./components/WhyUs.jsx";
+import AiBot from "./components/AiBot.jsx";
 import Veymu from "./components/Veymu.jsx";
 import Faq from "./components/Faq.jsx";
 import LeadForm from "./components/LeadForm.jsx";
@@ -43,6 +44,7 @@ export default function App() {
         <Services />
         <Process />
         <WhyUs />
+        <AiBot />
         <Veymu />
         <Faq />
         <LeadForm onOpenPrivacy={() => setPrivacyOpen(true)} />
